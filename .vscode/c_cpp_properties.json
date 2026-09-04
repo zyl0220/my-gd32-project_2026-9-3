@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "name": "ARM",
+      "compilerPath": "arm-none-eabi-gcc",
+      "cStandard": "c11",
+      "intelliSenseMode": "gcc-arm",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/Firmware/GD32C2x1_standard_peripheral/Include",
+        "${workspaceFolder}/Firmware/CMSIS/GD/GD32C2x1/Include",
+        "${workspaceFolder}/inc",
+        "${workspaceFolder}/gcc_startup"
+      ],
+      "defines": [],
+      "browse": {
+        "path": [
+          "${workspaceFolder}/**"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ],
+  "version": 4
+}
