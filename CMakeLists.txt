@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(my-gd32-project_2026-9-3 C ASM)
 
+# 构建入口见 CMakePresets.json：配置阶段选择预设，下面将功能选项映射为 C 宏。
+# 源文件参与编译不等于外设已启动；调用入口由 app.c 的条件编译决定。
 option(PROJECT_FACTORY_SELF_TEST "Enable factory EEPROM/UART self-test" OFF)
 option(PROJECT_FLASH_EEPROM_DEMO "Enable Flash EEPROM boot counter demo" OFF)
 
@@ -90,6 +92,8 @@ file(GLOB_RECURSE SOURCE_GLOB_3 CONFIGURE_DEPENDS
 list(REVERSE SOURCE_GLOB_3)
 list(APPEND SOURCES ${SOURCE_GLOB_3})
 
+# ELF 包含调试符号；HEX/BIN 用于烧录；MAP 查看代码/数据段占用；LST 查看反汇编。
+# --gc-sections 会剔除未被引用的节，不能根据 src 文件数量判断固件实际功能。
 set(TARGET_ELF ${PROJECT_NAME}.elf)
 
 add_executable(${TARGET_ELF}

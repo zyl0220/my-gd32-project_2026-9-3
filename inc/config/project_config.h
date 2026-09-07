@@ -13,12 +13,18 @@
 #define PRODUCT_VERSION_PATCH                0U
 #define PRODUCT_VERSION_STRING               "1.0.0"
 
-/* 应用节拍参数。SysTick 固定为 1 ms。 */
+/* 应用节拍参数。SysTick 固定为 1 ms，app.c 累计节拍后执行对应任务。
+ * 心跳参数为“翻转间隔”：500ms 翻转一次对应完整亮灭周期 1s。
+ * 按键扫描周期与 bsp_key.h 的消抖次数共同决定按下确认时间。 */
 #define APP_HEARTBEAT_HALF_PERIOD_MS         500U
 #define APP_KEY_SCAN_PERIOD_MS               5U
 #define APP_DIAGNOSTIC_REPORT_PERIOD_MS      1000U
 
-/* 功能开关：只能使用 0U 或 1U。Release(NDEBUG) 默认关闭启动日志。 */
+/* 功能开关：只能使用 0U 或 1U。Release(NDEBUG) 默认关闭启动日志。
+ * CMakePresets.json 选择构建配置，CMakeLists.txt 将选项转成编译宏。
+ * #ifndef 允许编译参数覆盖默认值；#if 为编译期裁剪，并非运行时判断。
+ * FactoryTest 启用外接 AT24C02 自检；FlashEepromDemo 启用片内 Flash 计数。
+ * 默认 Debug/Release 都不执行这两个例程。 */
 #ifndef PROJECT_ENABLE_STARTUP_LOG
 #ifdef NDEBUG
 #define PROJECT_ENABLE_STARTUP_LOG           0U

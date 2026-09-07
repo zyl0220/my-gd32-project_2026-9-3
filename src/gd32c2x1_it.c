@@ -106,7 +106,9 @@ void PendSV_Handler(void)
 */
 void SysTick_Handler(void)
 {
-    /* 中断中只更新时间，不执行 GPIO、日志或业务状态机。 */
+    /* 两套时间用途：app 的累计节拍驱动主循环，delay_decrement() 则服务
+     * systick.c 中的阻塞式 delay_1ms()。中断里不执行日志或业务状态机。
+     * 关中断期间多次到期不保证逐次补发，app 节拍不能当作精密实时时钟。 */
     app_tick_1ms_isr();
     delay_decrement();
 }

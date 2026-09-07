@@ -13,6 +13,8 @@
 #define FLASH_EEPROM_DEMO_VERSION  1U
 #define FLASH_EEPROM_DEMO_VALUE    0x12345678UL
 
+/* 这是 payload 内的应用格式（16字节）；与驱动记录头的 magic/version 不同。
+ * 驱动检查存储完整性，应用检查读出的数据是否属于自己的业务格式。 */
 typedef struct {
     uint32_t magic;
     uint16_t version;
@@ -38,6 +40,7 @@ void flash_eeprom_demo_run(void)
     flash_eeprom_demo_data_t verify;
     bsp_flash_eeprom_status_t status;
 
+    /* 第一步：扫描恢复。EMPTY 表示没有有效记录，不会自动擦除或格式化。 */
     status = bsp_flash_eeprom_init();
     if(status == BSP_FLASH_EEPROM_EMPTY) {
         memset(&data, 0, sizeof(data));
@@ -50,6 +53,7 @@ void flash_eeprom_demo_run(void)
             flash_eeprom_demo_print_error("read", status);
             return;
         }
+        /* 存储完整不代表业务格式兼容；例程遇到不匹配只报错，避免覆盖别的数据。 */
         if((data.magic != FLASH_EEPROM_DEMO_MAGIC) ||
            (data.version != FLASH_EEPROM_DEMO_VERSION)) {
             printf("[FLASH_EEPROM][FAIL] data schema mismatch; "
@@ -61,6 +65,8 @@ void flash_eeprom_demo_run(void)
         return;
     }
 
+    /* 第二步：修改并同步保存。本例每次启动写一次，用来演示跨复位记忆。
+     * 产品的模式保存应由用户确认修改触发，而不是照搬启动计数行为。 */
     data.boot_count++;
     status = bsp_flash_eeprom_write(0U, &data, sizeof(data));
     if(status != BSP_FLASH_EEPROM_OK) {
@@ -68,6 +74,8 @@ void flash_eeprom_demo_run(void)
         return;
     }
 
+    /* 第三步：验证应用读取接口（这里读的是 RAM 缓存）。
+     * 驱动 write 内部已做 Flash 回读校验；真实掉电保持需断电重启后验证。 */
     memset(&verify, 0, sizeof(verify));
     status = bsp_flash_eeprom_read(0U, &verify, sizeof(verify));
     if(status != BSP_FLASH_EEPROM_OK) {
