@@ -5,7 +5,7 @@
     硬件: SPI0 主机
           SCK  = PB3 (AF0)
           MISO = PA6 (AF0)
-          MOSI = PA7 (AF0)
+          MOSI = PB5 (AF0)
           CS   = PA5 (普通 GPIO 输出, 软件控制, 低有效)
     实现参考: GD32C2x1_Firmware_Library_V1.3.0 / Examples/SPI/SPI_master_slave_fullduplex_polling
 
@@ -96,10 +96,10 @@ extern "C" {
 #define BSP_SPI_MISO_AF        GPIO_AF_0
 #define BSP_SPI_MISO_RCU       RCU_GPIOA
 
-#define BSP_SPI_MOSI_PORT      GPIOA
-#define BSP_SPI_MOSI_PIN       GPIO_PIN_7
+#define BSP_SPI_MOSI_PORT      GPIOB
+#define BSP_SPI_MOSI_PIN       GPIO_PIN_5
 #define BSP_SPI_MOSI_AF        GPIO_AF_0
-#define BSP_SPI_MOSI_RCU       RCU_GPIOA
+#define BSP_SPI_MOSI_RCU       RCU_GPIOB
 
 /* 片选(CS)：普通 GPIO 输出，软件控制，低有效。挂多个从设备时可复制一组另配 CS。
    注意：本板 PA4 已被 bsp_key 的 USER 键占用，故 CS 用空闲的 PA5，避免引脚冲突。 */

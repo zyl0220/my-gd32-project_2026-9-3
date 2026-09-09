@@ -2,7 +2,7 @@
     \file    auto_probe.c
     \brief   自主调试闭环 - 双回传通道探针实现
 
-    通道B (UART printf): gd_eval_com_init(USART0, PA9/PA10, 115200 8N1) +
+    通道B (UART printf): bsp_debug_uart_init()，USART0 PB6/PB7 115200 8N1 +
                          固件已有的 __io_putchar 重定向，printf 直接出串口。
     通道A (读内存/RTT):  g_test_block 全局块，J-Link 用 .map 里的地址在线读取，
                          无需额外接线，最稳。
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "diagnostics/auto_probe.h"
 #include "gd32c2x1.h"
-#include "gd32c231c_eval.h"
+#include "bsp/bsp_debug_uart.h"
 #include "bsp/bsp_led.h"
 #include "bsp/bsp_i2c_eeprom.h"
 
@@ -61,12 +61,12 @@ static uint32_t auto_self_test(void)
 
 void auto_probe_init(void)
 {
-    /* 通道B: 初始化板载调试串口(USART0 / PA9-TX / PA10-RX / 115200) */
-    gd_eval_com_init(EVAL_COM);
+    /* 通道B: 初始化调试串口(USART0 / PB6-TX / PB7-RX / 115200) */
+    bsp_debug_uart_init();
 
     printf("\r\n==== GD32C231 auto-loop boot ====\r\n");
     printf("[BOOT] firmware: my-gd32-project_2026-9-3 (LED sweep)\r\n");
-    printf("[BOOT] uart: USART0 PA9/PA10 115200 8N1\r\n");
+    printf("[BOOT] uart: USART0 PB6/PB7 115200 8N1\r\n");
 
     g_test_block.test_pass = auto_self_test();
     printf("[SELFTEST] result = %s\r\n",

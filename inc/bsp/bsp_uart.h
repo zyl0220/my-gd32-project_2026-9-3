@@ -5,7 +5,7 @@
     硬件: USART1, TX=PA2 (AF2) / RX=PA3 (AF1), 默认 115200 8N1
     实现参考: GD32C2x1_Firmware_Library_V1.3.0 / Examples/USART
 
-    \note 本模块与调试串口(USART0 / PA9-PA10 / printf, 见 auto_probe.c)相互独立，
+    \note 本模块与调试串口(USART0 / PB6-PB7 / printf, 见 auto_probe.c)相互独立，
           互不影响。需要一路“干净的、可自由收发的”串口时用本模块即可。
           换 USART 实例 / 换引脚只改下方宏, bsp_uart.c 无需改动。
 

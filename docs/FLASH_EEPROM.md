@@ -29,7 +29,7 @@ cmake --preset FlashEepromDemo
 cmake --build --preset FlashEepromDemo --parallel 1
 ```
 
-烧录 `build/FlashEepromDemo/my-gd32-project_2026-9-3.hex`。串口使用 USART0、PA9/PA10、115200 8N1。
+烧录 `build/FlashEepromDemo/my-gd32-project_2026-9-3.hex`。串口使用 USART0、PB6/PB7、115200 8N1。
 
 每次复位会读取并递增启动次数，成功时输出：
 

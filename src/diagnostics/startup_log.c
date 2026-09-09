@@ -6,9 +6,9 @@
 #include "diagnostics/startup_log.h"
 
 #include <stdio.h>
+#include "bsp/bsp_debug_uart.h"
 #include "config/project_config.h"
 #include "gd32c2x1.h"
-#include "gd32c231c_eval.h"
 
 void startup_log_print(void)
 {
@@ -16,9 +16,9 @@ void startup_log_print(void)
     uint32_t fw_ver = gd32c2x1_firmware_version_get();
 #endif
 
-    /* 日志沿用 EVAL 的 USART0（PA9/PA10），printf 重定向见 gd32c231c_eval.c。
+    /* 日志使用项目 BSP 的 USART0（PB6/PB7），printf 重定向见 gd32c231c_eval.c。
      * 通用 bsp_uart 使用另一套 USART1；调用它不会自动切换 printf 的端口。 */
-    gd_eval_com_init(EVAL_COM);
+    bsp_debug_uart_init();
     printf("\r\n[BOOT] %s V%s", PRODUCT_NAME, PRODUCT_VERSION_STRING);
 #ifdef __FIRMWARE_VERSION_DEFINE
     printf("\r\n[BOOT] GD32C2X1 firmware V%u.%u.%u",
