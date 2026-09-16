@@ -5,6 +5,7 @@
       "compilerPath": "arm-none-eabi-gcc",
       "cStandard": "c11",
       "intelliSenseMode": "gcc-arm",
+      "configurationProvider": "ms-vscode.cmake-tools",
       "includePath": [
         "${workspaceFolder}/**",
         "${workspaceFolder}/Firmware/GD32C2x1_standard_peripheral/Include",
