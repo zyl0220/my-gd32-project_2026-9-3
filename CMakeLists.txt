@@ -6,6 +6,11 @@ project(my-gd32-project_2026-9-3 C ASM)
 # 源文件参与编译不等于外设已启动；调用入口由 app.c 的条件编译决定。
 option(PROJECT_FACTORY_SELF_TEST "Enable factory EEPROM/UART self-test" OFF)
 option(PROJECT_FLASH_EEPROM_DEMO "Enable Flash EEPROM boot counter demo" OFF)
+option(PROJECT_MOTOR_CONTROL "Enable GD32C231C8T7 motor controller" OFF)
+
+if(PROJECT_MOTOR_CONTROL AND PROJECT_FACTORY_SELF_TEST)
+    message(FATAL_ERROR "Motor control owns ADC and cannot run with factory ADC self-test")
+endif()
 
 set(LINKER_SCRIPT gd32c2x1_flash.ld)
 
@@ -50,6 +55,7 @@ endif()
 # 预处理器宏定义
 add_compile_definitions(
     GD32C231
+    GD32C231C8T7
     GD_ECLIPSE_GCC
     USE_STDPERIPH_DRIVER
 )
@@ -92,6 +98,10 @@ file(GLOB_RECURSE SOURCE_GLOB_3 CONFIGURE_DEPENDS
 list(REVERSE SOURCE_GLOB_3)
 list(APPEND SOURCES ${SOURCE_GLOB_3})
 
+if(NOT PROJECT_MOTOR_CONTROL)
+    list(FILTER SOURCES EXCLUDE REGEX "/src/motor/[^/]+[.]c$")
+endif()
+
 # ELF 包含调试符号；HEX/BIN 用于烧录；MAP 查看代码/数据段占用；LST 查看反汇编。
 # --gc-sections 会剔除未被引用的节，不能根据 src 文件数量判断固件实际功能。
 set(TARGET_ELF ${PROJECT_NAME}.elf)
@@ -114,12 +124,21 @@ if(PROJECT_FLASH_EEPROM_DEMO)
     )
 endif()
 
+if(PROJECT_MOTOR_CONTROL)
+    target_compile_definitions(${TARGET_ELF} PRIVATE
+        PROJECT_ENABLE_MOTOR_CONTROL=1U
+        # 未知主板没有已核对的日志串口引脚，电机镜像不占用该 GPIO。
+        PROJECT_ENABLE_STARTUP_LOG=0U
+    )
+endif()
+
 # 自有代码启用严格告警；厂商库保持资源管理器默认参数，便于后续原样升级。
 file(GLOB_RECURSE FIRST_PARTY_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/app/*.c"
     "${CMAKE_SOURCE_DIR}/src/bsp/*.c"
     "${CMAKE_SOURCE_DIR}/src/diagnostics/*.c"
     "${CMAKE_SOURCE_DIR}/src/examples/*.c"
+    "${CMAKE_SOURCE_DIR}/src/motor/*.c"
 )
 set_source_files_properties(${FIRST_PARTY_SOURCES} PROPERTIES
     COMPILE_OPTIONS "-Wall;-Wextra;-Wformat=2;-Wundef;-Werror=return-type;-Werror=implicit-function-declaration"

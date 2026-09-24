@@ -1,6 +1,6 @@
 {
   "projectname": "my-gd32-project_2026-9-3",
-  "mcu": "GD32C231F8P6TR",
+  "mcu": "GD32C231C8T7",
   "debug": {
     "activeConfiguration": "Debug",
     "configurations": [
@@ -81,8 +81,11 @@
         "preprocessor": {
           "defines": [
             "GD32C231",
+            "GD32C231C8T7",
             "GD_ECLIPSE_GCC",
-            "USE_STDPERIPH_DRIVER"
+            "USE_STDPERIPH_DRIVER",
+            "PROJECT_ENABLE_MOTOR_CONTROL=1U",
+            "PROJECT_ENABLE_STARTUP_LOG=0U"
           ]
         },
         "includes": {
@@ -198,8 +201,11 @@
         "preprocessor": {
           "defines": [
             "GD32C231",
+            "GD32C231C8T7",
             "USE_STDPERIPH_DRIVER",
-            "NDEBUG"
+            "NDEBUG",
+            "PROJECT_ENABLE_MOTOR_CONTROL=1U",
+            "PROJECT_ENABLE_STARTUP_LOG=0U"
           ]
         },
         "includes": {
@@ -315,6 +321,7 @@
         "preprocessor": {
           "defines": [
             "GD32C231",
+            "GD32C231C8T7",
             "GD_ECLIPSE_GCC",
             "USE_STDPERIPH_DRIVER",
             "PROJECT_ENABLE_FACTORY_SELF_TEST=1U"
@@ -433,6 +440,7 @@
         "preprocessor": {
           "defines": [
             "GD32C231",
+            "GD32C231C8T7",
             "GD_ECLIPSE_GCC",
             "USE_STDPERIPH_DRIVER",
             "PROJECT_ENABLE_FLASH_EEPROM_DEMO=1U"

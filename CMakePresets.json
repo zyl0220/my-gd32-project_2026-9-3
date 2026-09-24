@@ -15,14 +15,16 @@
       "name": "Debug",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_MOTOR_CONTROL": "ON"
       }
     },
     {
       "name": "Release",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "PROJECT_MOTOR_CONTROL": "ON"
       }
     },
     {
@@ -30,6 +32,7 @@
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_MOTOR_CONTROL": "OFF",
         "PROJECT_FACTORY_SELF_TEST": "ON"
       }
     },
@@ -38,7 +41,16 @@
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "PROJECT_MOTOR_CONTROL": "OFF",
         "PROJECT_FLASH_EEPROM_DEMO": "ON"
+      }
+    },
+    {
+      "name": "MotorControl",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "PROJECT_MOTOR_CONTROL": "ON"
       }
     }
   ],
@@ -58,6 +70,10 @@
     {
       "name": "FlashEepromDemo",
       "configurePreset": "FlashEepromDemo"
+    },
+    {
+      "name": "MotorControl",
+      "configurePreset": "MotorControl"
     }
   ]
 }

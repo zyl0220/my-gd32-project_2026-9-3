@@ -1,6 +1,6 @@
 # 工程阅读路线
 
-当前工程是 GD32C231F8P6TR 的裸机应用模板。默认行为是 LED1 心跳和 WAKEUP 按键切换 LED2；梳子模式、加热控制、延迟保存和受控关机属于后续应用功能，目前没有实现。
+当前工程目标芯片是 GD32C231C8T7。Debug/Release 默认进入电机控制主框架；板级参数未填时 `motor_app_init()` 返回配置故障，不接管任何未知主板引脚。
 
 ## 1. 先追踪启动和主循环
 
@@ -16,9 +16,11 @@ SysTick_Handler → app_tick_1ms_isr：累计节拍
                 → delay_decrement：服务阻塞式 delay_1ms
 
 app_process → 读取节拍快照 → app_process_1ms
-                            → LED 心跳
-                            → 按键扫描
-                            → 工厂诊断（仅相应构建配置）
+                            → motor_app_process_1ms（电机主框架）
+
+TIMER0 TRGO → ADC 注入序列 → ADC_IRQHandler
+                              → motor_app_current_isr（20 kHz）
+                              → 每 20 次调用速度环（1 kHz）
 ```
 
 先看 [main.c](../src/main.c)，接着看 [app.c](../src/app/app.c)，再看 [中断入口](../src/gd32c2x1_it.c)。无需一开始就逐行研究启动汇编或厂商库。
@@ -32,9 +34,12 @@ app_process → 读取节拍快照 → app_process_1ms
 | 位置 | 阅读重点 | 当前用途 |
 | --- | --- | --- |
 | `inc/config/project_config.h` | 周期参数、功能宏、默认值 | 业务参数集中入口 |
-| `src/bsp/bsp_led.c`、对应头文件 | 逻辑 LED 编号如何映射到引脚与电平 | 默认用 LED1、LED2 |
-| `src/bsp/bsp_key.c`、对应头文件 | 连续稳定采样、DOWN/UP 事件 | 默认只扫描 WAKEUP |
-| `src/diagnostics/startup_log.c` | USART0 初始化、启动信息 | Debug 等启用日志的配置 |
+| `src/motor/motor_app.c` | 启停、对齐、开环、闭环、上油、故障 | Debug/Release 电机主入口 |
+| `src/motor/observer.c` | 反电动势位置和速度估算 | 20 kHz 电流中断 |
+| `inc/motor/motor_param.h` | 板级引脚和电机参数 | 待实际 PCB 确认，默认禁止功率输出 |
+| `src/bsp/bsp_led.c`、对应头文件 | 逻辑 LED 编号如何映射到引脚与电平 | 仅诊断示例 |
+| `src/bsp/bsp_key.c`、对应头文件 | 连续稳定采样、DOWN/UP 事件 | 仅诊断示例 |
+| `src/diagnostics/startup_log.c` | USART0 初始化、启动信息 | 仅诊断示例 |
 | `src/diagnostics/auto_probe.c` | RAM 探针、外接 EEPROM 自检 | FactoryTest |
 | `src/examples/flash_eeprom_demo.c` | 启动计数跨复位保存 | FlashEepromDemo |
 | `src/bsp/bsp_flash_eeprom.c` | 片内 Flash 的日志快照 | 供应用主动调用 |
@@ -87,8 +92,9 @@ app_process → 读取节拍快照 → app_process_1ms
 
 | 预设 | 默认行为 |
 | --- | --- |
-| Debug | LED、按键、启动日志 |
-| Release | LED、按键，默认关闭启动日志 |
+| Debug | 电机主框架、功率输出锁定、关闭启动日志 |
+| Release | 电机主框架、功率输出锁定、关闭启动日志 |
+| MotorControl | 独立目录中的电机 Release 构建 |
 | FactoryTest | Debug 基础上启用外接 EEPROM 自检和周期诊断 |
 | FlashEepromDemo | Debug 基础上启用片内 Flash 启动计数 |
 
@@ -96,10 +102,8 @@ app_process → 读取节拍快照 → app_process_1ms
 
 链接脚本将应用 Flash 限制在前 62KB，末尾 2KB 留给模拟 EEPROM。这个限制防止正常链接把应用放进去，但不能阻止烧录器整片擦除。详见 [Flash EEPROM 使用说明](FLASH_EEPROM.md)。
 
-## 5. 将来接入梳子模式记忆的位置
+## 5. 主板到位后接入的位置
 
-建议在 `src/app/` 增加状态管理模块：由 `app_init()` 读取偏好，按键事件更新模式，由主循环调用 write 保存。模式、档位可以持久化；运行使能应在每次启动时重新初始化。
+先核对三相 PWM、两路电流采样、母线采样和硬件过流关断引脚，再填写 `inc/motor/motor_param.h`。主控命令可调用 `motor_app_request_start(rpm)`、`motor_app_request_stop()` 和 `motor_app_clear_fault()`；未知的通信、按键或温度传感器应在 `src/bsp/` 增加板级接口，由 `src/app/` 在主循环调度。不要在 ADC 中断里等待通信或写 Flash。
 
-延迟合并保存会留下尚未提交的时间窗口。例如等待500ms再保存，则窗口内断电可能恢复上一次已保存的模式。保存失败应检查返回值并限制重试，不能在主循环里无限写入。
-
-学习时优先在 Debug 中观察 `g_app_tick_ms`、`g_processed_tick_ms` 和按键事件。需要验证持久化时使用 FlashEepromDemo，复位后看启动计数变化，并通过多次更新覆盖切页；例程内 read 回读缓存不能替代真正的断电重启测试。
+学习主框架时先在 Debug 中观察 `g_app_tick_ms`、`g_processed_tick_ms`、`g_state` 和 `g_fault`。板级引脚和电机参数都未确认前，`g_fault` 保持配置故障是预期行为。

@@ -4,6 +4,7 @@
 
 ```text
 main / IRQ  →  app  →  bsp          →  GD32 SPL/CMSIS
+               ↘ motor → bsp/SPL   →  GD32 SPL/CMSIS
                     ↘ diagnostics   →  GD32 EVAL/SPL
 ```
 
@@ -27,6 +28,7 @@ main / IRQ  →  app  →  bsp          →  GD32 SPL/CMSIS
 - `src/bsp/`、`inc/bsp/`
 - `src/diagnostics/`、`inc/diagnostics/`
 - `src/examples/`、`inc/examples/`
+- `src/motor/`、`inc/motor/`
 - `inc/config/`
 - `docs/`
 
@@ -44,7 +46,7 @@ main / IRQ  →  app  →  bsp          →  GD32 SPL/CMSIS
 
 ## 中断规则
 
-1. ISR 只清标志、保存必要数据、更新时间或置事件标志。
+1. 普通外设 ISR 只清标志、保存必要数据、更新时间或置事件标志。电机模式的 ADC ISR 执行有时间上限的 20 kHz 电流环和每 20 次一次的速度环，需实测最坏执行时间。
 2. ISR 内禁止 `printf()`、阻塞等待、毫秒延时和 EEPROM 擦写。
 3. 与主循环共享的变量必须声明为 `volatile`；多字节一致性需要临界区保护。
 4. 新增 ISR 前先检查启动文件和现有 BSP，禁止重复定义同名 Handler。

@@ -8,6 +8,7 @@
 
 /* 产品身份：发布固件前必须同步更新版本号。 */
 #define PRODUCT_NAME                         "GD32C231_PRODUCT"
+#define PROJECT_MCU_MODEL                    "GD32C231C8T7"
 #define PRODUCT_VERSION_MAJOR                1U
 #define PRODUCT_VERSION_MINOR                0U
 #define PRODUCT_VERSION_PATCH                0U
@@ -41,6 +42,10 @@
 #define PROJECT_ENABLE_FLASH_EEPROM_DEMO      0U
 #endif
 
+#ifndef PROJECT_ENABLE_MOTOR_CONTROL
+#define PROJECT_ENABLE_MOTOR_CONTROL         0U
+#endif
+
 #if (APP_HEARTBEAT_HALF_PERIOD_MS == 0U)
 #error "APP_HEARTBEAT_HALF_PERIOD_MS must be greater than zero"
 #endif
@@ -67,6 +72,10 @@
 
 #if ((PROJECT_ENABLE_FLASH_EEPROM_DEMO != 0U) && (PROJECT_ENABLE_STARTUP_LOG == 0U))
 #error "Flash EEPROM demo requires PROJECT_ENABLE_STARTUP_LOG"
+#endif
+
+#if ((PROJECT_ENABLE_MOTOR_CONTROL != 0U) && (PROJECT_ENABLE_MOTOR_CONTROL != 1U))
+#error "PROJECT_ENABLE_MOTOR_CONTROL must be 0U or 1U"
 #endif
 
 #endif /* PROJECT_CONFIG_H */
