@@ -1,0 +1,24 @@
+# CMake / Ninja 构建产物
+/build/
+CMakeUserPresets.json
+
+# 编译器生成文件
+*.d
+*.o
+*.obj
+*.su
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+__pycache__/
+.pytest_cache/
+
+# 编辑器与系统临时文件
+*.tmp
+*.log
+*.bak
+*~
+Thumbs.db
+.DS_Store

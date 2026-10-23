@@ -1,0 +1,505 @@
+{
+  "projectname": "my-gd32-project_2026-9-3",
+  "mcu": "GD32C231C8T7",
+  "debug": {
+    "activeConfiguration": "Debug",
+    "configurations": [
+      {
+        "name": "Debug",
+        "probe": "jlink",
+        "sn": "",
+        "cfg": [
+          "d:\\Vscode-Gd32\\my-gd32-project_2026-9-3\\openocd_gdlink\\openocd_gdlink_gd32c221_231.cfg"
+        ],
+        "interface": "swd",
+        "speed": 4000,
+        "svdFile": "GD32C231.svd",
+        "elfFile": "",
+        "resetOnConnect": true,
+        "loadSymbolsOnly": false,
+        "freezePeripherals": false
+      }
+    ]
+  },
+  "ProjectActiveConfigurations": "Debug",
+  "configurations": {
+    "Debug": {
+      "targetProcessor": {
+        "armFamily": "cortex-m23",
+        "architecture": "None",
+        "instructionSet": "Thumb",
+        "floatABI": "None",
+        "fpuType": "None",
+        "otherTargetFlags": ""
+      },
+      "optimization": {
+        "level": "-O0",
+        "messageLength": true,
+        "signedChar": true,
+        "functionSections": true,
+        "dataSections": true,
+        "noCommon": false,
+        "pic": false,
+        "lto": false,
+        "otherFlags": ""
+      },
+      "warnings": {
+        "syntaxOnly": false,
+        "inhibitAll": false,
+        "werror": false,
+        "pedantic": false,
+        "pedanticErrors": false,
+        "wall": true,
+        "wextra": true,
+        "wunused": true,
+        "wuninitialized": true,
+        "wconversion": false,
+        "otherFlags": ""
+      },
+      "debugging": {
+        "level": "-g3",
+        "prof": false,
+        "gprof": false,
+        "otherFlags": ""
+      },
+      "outputFile": {
+        "list": true,
+        "dump": false,
+        "hex": true,
+        "bin": true,
+        "mot": false,
+        "size": true,
+        "objcopyFlags": "",
+        "objdumpFlags": "--source --all-headers --demangle --line-numbers --wide",
+        "sizeFlags": "--format=berkeley"
+      },
+      "compiler": {
+        "general": {
+          "cStandard": "-std=gnu11",
+          "otherFlags": ""
+        },
+        "preprocessor": {
+          "defines": [
+            "GD32C231",
+            "GD32C231C8T7",
+            "GD_ECLIPSE_GCC",
+            "USE_STDPERIPH_DRIVER",
+            "PROJECT_ENABLE_MOTOR_CONTROL=1U",
+            "PROJECT_ENABLE_STARTUP_LOG=0U"
+          ]
+        },
+        "includes": {
+          "includePaths": [
+            "Firmware/CMSIS",
+            "Firmware/CMSIS/GD/GD32C2x1/Include",
+            "Firmware/GD32C2x1_standard_peripheral/Include",
+            "inc"
+          ],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      },
+      "linker": {
+        "general": {
+          "linkerScript": "gd32c2x1_flash.ld",
+          "nostartfiles": false,
+          "nodefaultlibs": false,
+          "nostdlib": false,
+          "gcSections": true,
+          "stripAll": false
+        },
+        "libraries": {
+          "libs": [],
+          "searchPaths": [
+            "ldscripts/"
+          ]
+        },
+        "miscellaneous": {
+          "linkerFlags": [],
+          "otherObjects": [],
+          "generateMap": true,
+          "crossReference": false,
+          "newlibNano": true,
+          "printfFloat": false,
+          "noSyscalls": true,
+          "otherFlags": "-Wl,--no-warn-rwx-segments"
+        }
+      },
+      "assembler": {
+        "preprocessor": {
+          "usePreprocessor": true,
+          "nostdinc": false
+        },
+        "miscellaneous": {
+          "assemblerFlags": "",
+          "generateListing": false,
+          "verbose": false,
+          "otherFlags": ""
+        },
+        "includes": {
+          "includePaths": [],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      }
+    },
+    "Release": {
+      "targetProcessor": {
+        "armFamily": "cortex-m23",
+        "architecture": "None",
+        "instructionSet": "Thumb",
+        "floatABI": "None",
+        "fpuType": "None",
+        "otherTargetFlags": ""
+      },
+      "optimization": {
+        "level": "-Os",
+        "messageLength": true,
+        "signedChar": true,
+        "functionSections": true,
+        "dataSections": true,
+        "noCommon": false,
+        "pic": false,
+        "lto": false,
+        "otherFlags": ""
+      },
+      "warnings": {
+        "syntaxOnly": false,
+        "inhibitAll": false,
+        "werror": false,
+        "pedantic": false,
+        "pedanticErrors": false,
+        "wall": true,
+        "wextra": true,
+        "wunused": true,
+        "wuninitialized": true,
+        "wconversion": false,
+        "otherFlags": ""
+      },
+      "debugging": {
+        "level": "-g1",
+        "prof": false,
+        "gprof": false,
+        "otherFlags": ""
+      },
+      "outputFile": {
+        "list": true,
+        "dump": false,
+        "hex": true,
+        "bin": true,
+        "mot": false,
+        "size": true,
+        "objcopyFlags": "",
+        "objdumpFlags": "--source --all-headers --demangle --line-numbers --wide",
+        "sizeFlags": "--format=berkeley"
+      },
+      "compiler": {
+        "general": {
+          "cStandard": "-std=gnu11",
+          "otherFlags": ""
+        },
+        "preprocessor": {
+          "defines": [
+            "GD32C231",
+            "GD32C231C8T7",
+            "USE_STDPERIPH_DRIVER",
+            "NDEBUG",
+            "PROJECT_ENABLE_MOTOR_CONTROL=1U",
+            "PROJECT_ENABLE_STARTUP_LOG=0U"
+          ]
+        },
+        "includes": {
+          "includePaths": [
+            "Firmware/CMSIS",
+            "Firmware/CMSIS/GD/GD32C2x1/Include",
+            "Firmware/GD32C2x1_standard_peripheral/Include",
+            "inc"
+          ],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      },
+      "linker": {
+        "general": {
+          "linkerScript": "gd32c2x1_flash.ld",
+          "nostartfiles": false,
+          "nodefaultlibs": false,
+          "nostdlib": false,
+          "gcSections": true,
+          "stripAll": false
+        },
+        "libraries": {
+          "libs": [],
+          "searchPaths": [
+            "ldscripts/"
+          ]
+        },
+        "miscellaneous": {
+          "linkerFlags": [],
+          "otherObjects": [],
+          "generateMap": true,
+          "crossReference": false,
+          "newlibNano": true,
+          "printfFloat": false,
+          "noSyscalls": true,
+          "otherFlags": "-Wl,--no-warn-rwx-segments"
+        }
+      },
+      "assembler": {
+        "preprocessor": {
+          "usePreprocessor": true,
+          "nostdinc": false
+        },
+        "miscellaneous": {
+          "assemblerFlags": "",
+          "generateListing": false,
+          "verbose": false,
+          "otherFlags": ""
+        },
+        "includes": {
+          "includePaths": [],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      }
+    },
+    "FactoryTest": {
+      "targetProcessor": {
+        "armFamily": "cortex-m23",
+        "architecture": "None",
+        "instructionSet": "Thumb",
+        "floatABI": "None",
+        "fpuType": "None",
+        "otherTargetFlags": ""
+      },
+      "optimization": {
+        "level": "-O0",
+        "messageLength": true,
+        "signedChar": true,
+        "functionSections": true,
+        "dataSections": true,
+        "noCommon": false,
+        "pic": false,
+        "lto": false,
+        "otherFlags": ""
+      },
+      "warnings": {
+        "syntaxOnly": false,
+        "inhibitAll": false,
+        "werror": false,
+        "pedantic": false,
+        "pedanticErrors": false,
+        "wall": true,
+        "wextra": true,
+        "wunused": true,
+        "wuninitialized": true,
+        "wconversion": false,
+        "otherFlags": ""
+      },
+      "debugging": {
+        "level": "-g3",
+        "prof": false,
+        "gprof": false,
+        "otherFlags": ""
+      },
+      "outputFile": {
+        "list": true,
+        "dump": false,
+        "hex": true,
+        "bin": true,
+        "mot": false,
+        "size": true,
+        "objcopyFlags": "",
+        "objdumpFlags": "--source --all-headers --demangle --line-numbers --wide",
+        "sizeFlags": "--format=berkeley"
+      },
+      "compiler": {
+        "general": {
+          "cStandard": "-std=gnu11",
+          "otherFlags": ""
+        },
+        "preprocessor": {
+          "defines": [
+            "GD32C231",
+            "GD32C231C8T7",
+            "GD_ECLIPSE_GCC",
+            "USE_STDPERIPH_DRIVER",
+            "PROJECT_ENABLE_FACTORY_SELF_TEST=1U"
+          ]
+        },
+        "includes": {
+          "includePaths": [
+            "Firmware/CMSIS",
+            "Firmware/CMSIS/GD/GD32C2x1/Include",
+            "Firmware/GD32C2x1_standard_peripheral/Include",
+            "inc"
+          ],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      },
+      "linker": {
+        "general": {
+          "linkerScript": "gd32c2x1_flash.ld",
+          "nostartfiles": false,
+          "nodefaultlibs": false,
+          "nostdlib": false,
+          "gcSections": true,
+          "stripAll": false
+        },
+        "libraries": {
+          "libs": [],
+          "searchPaths": [
+            "ldscripts/"
+          ]
+        },
+        "miscellaneous": {
+          "linkerFlags": [],
+          "otherObjects": [],
+          "generateMap": true,
+          "crossReference": false,
+          "newlibNano": true,
+          "printfFloat": false,
+          "noSyscalls": true,
+          "otherFlags": "-Wl,--no-warn-rwx-segments"
+        }
+      },
+      "assembler": {
+        "preprocessor": {
+          "usePreprocessor": true,
+          "nostdinc": false
+        },
+        "miscellaneous": {
+          "assemblerFlags": "",
+          "generateListing": false,
+          "verbose": false,
+          "otherFlags": ""
+        },
+        "includes": {
+          "includePaths": [],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      }
+    },
+    "FlashEepromDemo": {
+      "targetProcessor": {
+        "armFamily": "cortex-m23",
+        "architecture": "None",
+        "instructionSet": "Thumb",
+        "floatABI": "None",
+        "fpuType": "None",
+        "otherTargetFlags": ""
+      },
+      "optimization": {
+        "level": "-O0",
+        "messageLength": true,
+        "signedChar": true,
+        "functionSections": true,
+        "dataSections": true,
+        "noCommon": false,
+        "pic": false,
+        "lto": false,
+        "otherFlags": ""
+      },
+      "warnings": {
+        "syntaxOnly": false,
+        "inhibitAll": false,
+        "werror": false,
+        "pedantic": false,
+        "pedanticErrors": false,
+        "wall": true,
+        "wextra": true,
+        "wunused": true,
+        "wuninitialized": true,
+        "wconversion": false,
+        "otherFlags": ""
+      },
+      "debugging": {
+        "level": "-g3",
+        "prof": false,
+        "gprof": false,
+        "otherFlags": ""
+      },
+      "outputFile": {
+        "list": true,
+        "dump": false,
+        "hex": true,
+        "bin": true,
+        "mot": false,
+        "size": true,
+        "objcopyFlags": "",
+        "objdumpFlags": "--source --all-headers --demangle --line-numbers --wide",
+        "sizeFlags": "--format=berkeley"
+      },
+      "compiler": {
+        "general": {
+          "cStandard": "-std=gnu11",
+          "otherFlags": ""
+        },
+        "preprocessor": {
+          "defines": [
+            "GD32C231",
+            "GD32C231C8T7",
+            "GD_ECLIPSE_GCC",
+            "USE_STDPERIPH_DRIVER",
+            "PROJECT_ENABLE_FLASH_EEPROM_DEMO=1U"
+          ]
+        },
+        "includes": {
+          "includePaths": [
+            "Firmware/CMSIS",
+            "Firmware/CMSIS/GD/GD32C2x1/Include",
+            "Firmware/GD32C2x1_standard_peripheral/Include",
+            "inc"
+          ],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      },
+      "linker": {
+        "general": {
+          "linkerScript": "gd32c2x1_flash.ld",
+          "nostartfiles": false,
+          "nodefaultlibs": false,
+          "nostdlib": false,
+          "gcSections": true,
+          "stripAll": false
+        },
+        "libraries": {
+          "libs": [],
+          "searchPaths": [
+            "ldscripts/"
+          ]
+        },
+        "miscellaneous": {
+          "linkerFlags": [],
+          "otherObjects": [],
+          "generateMap": true,
+          "crossReference": false,
+          "newlibNano": true,
+          "printfFloat": false,
+          "noSyscalls": true,
+          "otherFlags": "-Wl,--no-warn-rwx-segments"
+        }
+      },
+      "assembler": {
+        "preprocessor": {
+          "usePreprocessor": true,
+          "nostdinc": false
+        },
+        "miscellaneous": {
+          "assemblerFlags": "",
+          "generateListing": false,
+          "verbose": false,
+          "otherFlags": ""
+        },
+        "includes": {
+          "includePaths": [],
+          "systemPaths": [],
+          "includeFiles": []
+        }
+      }
+    }
+  }
+}
