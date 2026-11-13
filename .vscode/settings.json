@@ -1,4 +1,7 @@
 {
-  "cmake.cmakePath": "cmake",
-  "cmake.configureOnOpen": true
+  "cmake.cmakePath": "C:/Users/resta/Desktop/GD项目/04_工具与软件/VS code/Tools/cmake-4.2.3-windows-x86_64/bin/cmake.exe",
+  "cmake.configureOnOpen": true,
+  "cmake.environment": {
+    "PATH": "D:/gcc-arm/xpack-arm-none-eabi-gcc-12.3.1-1.1/bin;C:/Users/resta/Tools/ninja;${env:PATH}"
+  }
 }
