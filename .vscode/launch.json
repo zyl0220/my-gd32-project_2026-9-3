@@ -1,0 +1,100 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    {
+      "name": "Cortex-Debug · J-Link 烧录并调试 (查看寄存器)",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "jlink",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "device": "GD32C231C8",
+      "interface": "swd",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "runToEntryPoint": "main",
+      "liveWatch": {
+        "enabled": true,
+        "samplesPerSecond": 4
+      }
+    },
+    {
+      "name": "Cortex-Debug · J-Link 仅附加查看寄存器 (不烧录不复位)",
+      "type": "cortex-debug",
+      "request": "attach",
+      "servertype": "jlink",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "device": "GD32C231C8",
+      "interface": "swd",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "liveWatch": {
+        "enabled": true,
+        "samplesPerSecond": 4
+      }
+    },
+    {
+      "name": "Cortex-Debug · OpenOCD (GD-Link/DAP) 烧录并调试",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "device": "GD32C231C8",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "configFiles": [
+        "${workspaceFolder}/openocd_gdlink/openocd_gdlink_gd32c221_231.cfg"
+      ],
+      "runToEntryPoint": "main"
+    },
+    {
+      "name": "Cortex-Debug · OpenOCD (GD-Link/DAP) 仅附加查看寄存器",
+      "type": "cortex-debug",
+      "request": "attach",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "device": "GD32C231C8",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "configFiles": [
+        "${workspaceFolder}/openocd_gdlink/openocd_gdlink_gd32c221_231.cfg"
+      ]
+    },
+    {
+      "name": "GD32: Debug",
+      "type": "gd32-debug",
+      "request": "launch",
+      "device": "GD32C231C8",
+      "probe": "jlink",
+      "speed": 4000,
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "loadSymbolsOnly": false,
+      "resetOnConnect": true
+    },
+    {
+      "name": "GD32: Attach",
+      "type": "gd32-debug",
+      "request": "attach",
+      "device": "GD32C231C8",
+      "probe": "jlink",
+      "speed": 4000,
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "loadSymbolsOnly": true,
+      "resetOnConnect": false
+    },
+    {
+      "name": "GD32: GDLink",
+      "type": "gd32-debug",
+      "request": "launch",
+      "device": "GD32C231C8T7",
+      "probe": "gdlink",
+      "speed": 4000,
+      "executable": "${workspaceFolder}/build/Debug/my-gd32-project_2026-9-3.elf",
+      "svdFile": "${workspaceFolder}/GD32C231.svd",
+      "loadSymbolsOnly": false,
+      "resetOnConnect": true
+    }
+  ]
+}

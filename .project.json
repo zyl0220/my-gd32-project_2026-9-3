@@ -18,6 +18,36 @@
         "resetOnConnect": true,
         "loadSymbolsOnly": false,
         "freezePeripherals": false
+      },
+      {
+        "name": "Attach",
+        "probe": "jlink",
+        "sn": "",
+        "cfg": [
+          "d:\\Vscode-Gd32\\my-gd32-project_2026-9-3\\openocd_gdlink\\openocd_gdlink_gd32c221_231.cfg"
+        ],
+        "interface": "swd",
+        "speed": 4000,
+        "svdFile": "GD32C231.svd",
+        "elfFile": "",
+        "resetOnConnect": false,
+        "loadSymbolsOnly": true,
+        "freezePeripherals": false
+      },
+      {
+        "name": "GDLink",
+        "probe": "gdlink",
+        "sn": "",
+        "cfg": [
+          "d:\\Vscode-Gd32\\my-gd32-project_2026-9-3\\openocd_gdlink\\openocd_gdlink_gd32c221_231.cfg"
+        ],
+        "interface": "swd",
+        "speed": 4000,
+        "svdFile": "GD32C231.svd",
+        "elfFile": "",
+        "resetOnConnect": true,
+        "loadSymbolsOnly": false,
+        "freezePeripherals": false
       }
     ]
   },
